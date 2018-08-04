@@ -1,0 +1,63 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/log"
+    android:padding="40dp">
+
+
+    <EditText
+        android:id="@+id/vtxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:drawableLeft="@drawable/phone"
+        android:drawablePadding="5dp"
+        android:ems="10"
+        android:hint="######"
+        android:inputType="textEmailAddress"
+        android:paddingLeft="0dp"
+        android:textColor="#FFF"
+        android:textColorHint="#999" />
+
+
+
+    <Button
+        android:id="@+id/vry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+
+        android:background="@android:color/holo_orange_light"
+        android:onClick="signIn"
+        android:text="Verify" />
+
+    <TextView
+        android:id="@+id/timer1"
+        android:layout_width="107dp"
+        android:layout_height="46dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+
+
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/verifyTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+
+        android:onClick="resend"
+        android:text="Resend code"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFF"
+        android:textStyle="bold" />
+
+
+
+</LinearLayout>

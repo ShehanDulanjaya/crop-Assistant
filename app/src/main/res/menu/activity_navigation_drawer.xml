@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_my_profile"
+            android:title="Profile" />
+        <item
+            android:id="@+id/nav_additem"
+            android:icon="@drawable/ic_my_attendance"
+            android:title="Add Item" />
+        <item
+            android:id="@+id/nav_announcement"
+            android:icon="@drawable/ic_news_events"
+            android:title="My Bids" />
+        <item
+            android:id="@+id/nav_mycart"
+            android:icon="@drawable/ic_setting"
+            android:title="My Cart" />
+
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_share"
+                android:iconTint="@color/black"
+                android:title="Share App" />
+
+            <item
+                android:id="@+id/nav_rateus"
+                android:icon="@drawable/ic_rateus"
+                android:title="Rate us" />
+
+            <item
+                android:id="@+id/nav_feedback"
+                android:icon="@drawable/ic_feeback"
+
+                android:title="Feedback" />
+
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_logout"
+                android:title="Logout" />
+
+            <item
+                android:id="@+id/nav_exit"
+                android:icon="@drawable/ic_exit"
+                android:title="Exit" />
+
+        </menu>
+    </item>
+
+</menu>

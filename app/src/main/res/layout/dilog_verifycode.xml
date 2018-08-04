@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/my_shape"
+    android:weightSum="1"
+    android:theme="@style/AppTheme"
+    >
+
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20dp">
+
+
+            <Button
+                android:id="@+id/btnVerifyMyCode"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_alignTop="@+id/lblinfo"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="65dp"
+                android:background="@layout/corner"
+                android:text="      Save     " />
+
+            <EditText
+                android:id="@+id/txtCurrentPass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/lblinfo"
+                android:layout_alignLeft="@+id/lblinfo"
+                android:layout_alignRight="@+id/lblinfo"
+                android:layout_alignStart="@+id/lblinfo"
+                android:layout_marginTop="10dp"
+                android:hint="Please enter your bid price here"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lblinfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtCurrentPass"
+                android:layout_margin="10dp"
+
+                android:layout_marginBottom="50dp"
+                android:text="We sent code to your email address after verify it you can choose your new password - Thank you"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#ffffff"
+                android:textSize="15dp"
+                android:visibility="gone" />
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>

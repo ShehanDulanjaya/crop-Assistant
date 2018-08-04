@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "943209092959",
+    "firebase_url": "https://firsttest-e9973.firebaseio.com",
+    "project_id": "firsttest-e9973",
+    "storage_bucket": "firsttest-e9973.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:943209092959:android:1c1afb040cdd3f68",
+        "android_client_info": {
+          "package_name": "com.core.sheha.ftest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "943209092959-qgr7kshhb4f65uvo4ii4b8kl40nnom3k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.core.sheha.ftest",
+            "certificate_hash": "15b131df2350c9e441bbe56e16813682dfe346ed"
+          }
+        },
+        {
+          "client_id": "943209092959-7kam65bf9m8eakaeu3h2tajdd1465hs6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.core.sheha.ftest",
+            "certificate_hash": "2d05141d5fca7f2412271d1c16493df835a27a9f"
+          }
+        },
+        {
+          "client_id": "943209092959-u38elaucgn96rv55ijb7j1thbdp3lln4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzXmQOQzO4QZUoss-9mynqZmjMfhswsBM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "943209092959-u38elaucgn96rv55ijb7j1thbdp3lln4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mybg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.core.sheha.ftest.AddItem">
+
+
+    <EditText
+        android:id="@+id/txtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/ShowImageView"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="13dp"
+        android:background="@layout/corner"
+        android:ems="10"
+        android:hint="  Enter Item Title "
+        android:inputType="text|textPersonName"
+        android:textAlignment="center"
+        android:layout_alignLeft="@+id/ButtonChooseImage"
+        android:layout_alignStart="@+id/ButtonChooseImage" />
+
+    <EditText
+        android:id="@+id/txtDes"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_below="@+id/txtTitle"
+        android:layout_marginTop="14dp"
+        android:background="@layout/corner"
+        android:ems="10"
+        android:hint="  Enter Item Desciption "
+        android:inputType="text|textPersonName"
+        android:textAlignment="center"
+        android:layout_alignLeft="@+id/txtTitle"
+        android:layout_alignStart="@+id/txtTitle"
+        android:layout_alignRight="@+id/txtTitle"
+        android:layout_alignEnd="@+id/txtTitle" />
+
+    <EditText
+        android:id="@+id/txtPrice"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_below="@+id/txtDes"
+        android:layout_marginTop="18dp"
+        android:background="@layout/corner"
+        android:ems="10"
+        android:hint="  Enter Item Price"
+        android:inputType="text|textPersonName"
+        android:textAlignment="center"
+        android:layout_alignLeft="@+id/txtDes"
+        android:layout_alignStart="@+id/txtDes"
+        android:layout_alignRight="@+id/txtDes"
+        android:layout_alignEnd="@+id/txtDes" />
+
+    <ImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/ShowImageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="27dp"
+        android:src="@drawable/ic_launcher"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/ButtonChooseImage"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/txtPrice"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="16dp"
+        android:background="@layout/corner"
+        android:text="Choose Picture..." />
+
+
+    <Button
+        android:id="@+id/ButtonUploadImage"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:background="@layout/corner"
+        android:text="   Add Item   "
+        android:layout_below="@+id/ButtonChooseImage"
+        android:layout_marginTop="13dp"
+        android:layout_alignLeft="@+id/txtPrice"
+        android:layout_alignStart="@+id/txtPrice"
+        android:layout_alignRight="@+id/ButtonChooseImage"
+        android:layout_alignEnd="@+id/ButtonChooseImage" />
+
+
+
+</RelativeLayout>
