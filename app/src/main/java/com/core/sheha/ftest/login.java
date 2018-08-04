@@ -74,7 +74,7 @@ private Button verifyButton,sendButton;
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
-                       
+
                         break;
                 }
             }
