@@ -1,5 +1,6 @@
 package com.core.sheha.ftest;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.core.sheha.ftest.Firebase.Profile;
+import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -31,13 +34,15 @@ public class verify extends AppCompatActivity {
     private EditText very;
     private Button tim;
     private String mVerificationId;
-    public int seconds = 5;
+    public int seconds = 120;
+    String id = "",stremail="";
     private PhoneAuthProvider.ForceResendingToken resendToken;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks
             verificationCallbacks;
-    private String phn;
+    private String phn,addr,email,name,pass;
     private static final String TAG = "PhoneAuth";
     private String phoneVerificationId;
+    Firebase db;
 
 
 
@@ -48,6 +53,10 @@ public class verify extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
          mVerificationId=getIntent().getStringExtra("stuff");
         phn=getIntent().getStringExtra("phn");
+        name=getIntent().getStringExtra("name");
+        addr=getIntent().getStringExtra("addr");
+        pass=getIntent().getStringExtra("pass");
+        stremail=getIntent().getStringExtra("email");
         very=(EditText)findViewById(R.id.vtxt);
         tim=(Button) findViewById(R.id.verifyTxt);
         tim.setVisibility(View.INVISIBLE);
@@ -94,6 +103,8 @@ public class verify extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(verify.this, "Successfuly signed", Toast.LENGTH_SHORT).show();
+                            setDataBustoDB();
+
                         } else {
                             Toast.makeText(verify.this, "Failed to sign " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -165,5 +176,33 @@ public class verify extends AppCompatActivity {
                 resendToken);
     }
 
+    private void setDataBustoDB(){
+        try {
+            //  dbRef = FirebaseDatabase.getInstance().getReference("Bus5-w1");
+            db = new Firebase("https://firsttest-e9973.firebaseio.com/accounts/"+phn);
+
+            Profile profile = new Profile();
+
+            profile.setName(name);
+            profile.setEmail(stremail);
+            profile.setAddress(addr);
+
+            profile.setMobile(phn);
+            profile.setPass(pass);
+            profile.setStatus("Active");
+            db.setValue(profile);
+            //method if user create account by referral
+
+            Toast.makeText(this, "Account Created Successfully", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(verify.this, loginPage.class);
+            startActivity(intent);
+            finish();
+
+
+        }catch (Exception ex){
+            Toast.makeText(this, ex.toString(), Toast.LENGTH_SHORT).show();
+
+        }
+    }
 
 }

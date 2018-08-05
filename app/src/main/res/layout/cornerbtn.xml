@@ -7,11 +7,11 @@
     android:layout_width="wrap_content">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#6023B4"/>
+            <solid android:color="#CCFBC02D"/>
             <corners android:radius="10dp" />
             <stroke
                 android:width="2dp"
-                android:color="#6023B4"
+                android:color="#CCFBC02D"
                 />
         </shape>
     </item>

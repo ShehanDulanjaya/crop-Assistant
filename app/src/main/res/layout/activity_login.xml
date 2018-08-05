@@ -63,8 +63,7 @@
 
         android:background="@android:color/holo_orange_light"
         android:onClick="sendCode"
-        android:text="send"
-        />
+        android:text="send" />
 
 
 

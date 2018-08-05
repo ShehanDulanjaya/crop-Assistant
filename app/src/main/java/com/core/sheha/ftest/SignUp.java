@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -25,6 +26,10 @@ import android.widget.Toast;
 
 import com.core.sheha.ftest.Firebase.Profile;
 import com.firebase.client.Firebase;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +43,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 
 import javax.mail.Message;
@@ -59,7 +65,9 @@ public class SignUp extends AppCompatActivity {
     DatabaseReference dbRef;
     private static final String utxt = "shehanproject5";
     private static final String utemp = "she12345";
-
+    public String mVerificationId[]=new String[5];
+    private FirebaseAuth fbAuth;
+    boolean chk=true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,59 +83,72 @@ public class SignUp extends AppCompatActivity {
         txtPass=(EditText)findViewById(R.id.txtpropass);
         txtemail=(EditText)findViewById(R.id.txtEmail);
         txtaddress=(EditText)findViewById(R.id.txtAddress);
+        fbAuth = FirebaseAuth.getInstance();
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // settemp();
+                final String phoneNumber = txtMobile.getText().toString();
                 if(txtName.getText().toString().trim().length()==0){
                     txtName.setError("Please enter name");
-                }
-                else{
-                    txtName.setError(null);
                 }
                 if(txtMobile.getText().toString().trim().length()==0){
                     txtMobile.setError("Please enter mobile no");
                 }
-                else{
-                    txtMobile.setError(null);
-                }
                 if(txtPass.getText().toString().trim().length()==0){
                     txtPass.setError("Please enter password");
-                }
-                else{
-                    txtPass.setError(null);
                 }
                 if(txtaddress.getText().toString().trim().length()==0){
                     txtaddress.setError("Please enter address");
                 }
-                else{
-                    txtaddress.setError(null);
-                }
                 if(txtemail.getText().toString().trim().length()==0){
                     txtemail.setError("Please enter email");
-                }
-                else{
-                    txtemail.setError(null);
                 }
                 if(txtName.getText().toString().trim().length()!=0 &&txtMobile.getText().toString().trim().length()!=0
                         && txtPass.getText().toString().trim().length()!=0    && txtaddress.getText().toString().trim().length()!=0
                         && txtemail.getText().toString().trim().length()!=0
                         ){
+
+
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    id=   txtMobile.getText().toString();
+                                    stremail=   txtemail.getText().toString();
+                                    Toast.makeText(ct, "Please Wait...", Toast.LENGTH_SHORT).show();
+                                    getUserData();
+                                    if(chk){
+                                        send(phoneNumber);
+                                    }
+                                   // send(phoneNumber);
+                                    //Yes button clicked
+                                    break;
+
+                                case DialogInterface.BUTTON_NEGATIVE:
+
+                                    break;
+                            }
+                        }
+                    };
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SignUp.this);
+                    builder.setMessage(phoneNumber+" Correct Phone Number?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
+
+
+
+
                     //save data here
-                    Toast.makeText(ct, "Please Wait...", Toast.LENGTH_SHORT).show();
 
-                    id=   txtMobile.getText().toString();
-                    stremail=   txtemail.getText().toString();
 
-                    getUserData();
+
                 }
 
             }
         });
     }
 
-    private void getUserData(){
+    public void getUserData(){
 
         dbRef = FirebaseDatabase.getInstance().getReference("accounts/"+id);
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -136,20 +157,16 @@ public class SignUp extends AppCompatActivity {
                 try {
                     Profile profile = dataSnapshot.getValue(Profile.class);
                     if(profile.getMobile().equals(id)){
-                        Toast.makeText(ct, "Already Register with this Email", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ct, "Already Register with this Mobile Number", Toast.LENGTH_SHORT).show();
+                        chk=false;
+
                     }
                     else{
-                        isOnline(getApplicationContext(),stremail);
 
-
-                      //  setDataBustoDB();
 
                     }
                     }
                 catch (Exception ex){
-                    isOnline(getApplicationContext(),stremail);
-
-                    // setDataBustoDB();
 
                 }
             }
@@ -197,25 +214,8 @@ public class SignUp extends AppCompatActivity {
         }
     }
 
-    /*private void settemp(){
-        try {
-            //  dbRef = FirebaseDatabase.getInstance().getReference("Bus5-w1");
-            db = new Firebase("https://mannat-b77d7.firebaseio.com/accounts/"+"temp");
 
-            Profile profile = new Profile();
 
-            profile.setName("I am temp");
-            profile.setMobile("number");
-            profile.setLastwithdraw(0);
-            profile.setPoints(0);
-            db.setValue(profile);
-
-        }catch (Exception ex){
-            Toast.makeText(ct, ex.toString(), Toast.LENGTH_SHORT).show();
-
-        }
-    }
-*/
 
     @Override
     protected void onResume() {
@@ -231,65 +231,6 @@ public class SignUp extends AppCompatActivity {
             decorView.setSystemUiVisibility(uiOptions);
         }
     }
-
-    public void VerifyCodeDialog() {
-        final DialogInterface dialog;
-        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.dilog_verifycode, null);
-
-
-
-        dialogBuilder.setIcon(R.mipmap.ic_launcher);
-
-        dialogBuilder.setView(dialogView);
-        dialogBuilder.setTitle("Verify Email");
-        dialogBuilder.setCancelable(false);
-
-        final Button btnVerifyMyCode=(Button) dialogView.findViewById(R.id.btnVerifyMyCode);
-        final TextView txtcode=(TextView) dialogView.findViewById(R.id.txtCurrentPass);
-        final TextView txtinfom=(TextView) dialogView.findViewById(R.id.lblinfo);
-
-
-
-        dialogBuilder.setNegativeButton("  Close  ", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                dialog.cancel();
-
-            }
-        });
-
-        final AlertDialog d = dialogBuilder.create();
-        d.show();
-        //  Toast.makeText(context, ""+readAsset("code.txt"), Toast.LENGTH_LONG).show();
-
-
-        btnVerifyMyCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(txtcode.getText().toString().trim().length()==0){
-
-                     Toast.makeText(ct, "Please enter code first", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    if(txtcode.getText().toString().equals(readAsset("code.txt"))){
-                        // Toast.makeText(context, "code match", Toast.LENGTH_SHORT).show();
-                        saveAssest("code.txt","");
-                        setDataBustoDB();
-                        d.cancel();
-                    }
-                    else{
-
-                        Toast.makeText(ct, "Code does not match please retry", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
-
-
-        //  Button btn = d.getButton(DialogInterface.BUTTON_NEGATIVE);
-        // btn.setTextColor(Color.WHITE);
-    }// End Function
 
     public String readAsset(String path) {
         String parentNum="";
@@ -376,14 +317,7 @@ public class SignUp extends AppCompatActivity {
 
         }
     }
-    /* public void addAttachment(String filename) throws Exception {
-         BodyPart messageBodyPart = new MimeBodyPart();
-         DataSource source = new FileDataSource(filename);
-         messageBodyPart.setDataHandler(new DataHandler(source));
-         messageBodyPart.setFileName(filename);
 
-         _multipart.addBodyPart(messageBodyPart);
-     }*/
     private Message createMessage(String email, String subject, String messageBody, Session session) throws MessagingException, UnsupportedEncodingException {
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress("shehanproject5@gmail.com", getString(R.string.app_name)+"  "));
@@ -422,9 +356,7 @@ public class SignUp extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             Toast.makeText(ct, "Successfully Sent", Toast.LENGTH_SHORT).show();
-             // progressDialog.dismiss();
-            VerifyCodeDialog();
-            // txtN.setText("");
+
 
 
 
@@ -441,6 +373,60 @@ public class SignUp extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    private void send(String phoneNumber) {
+
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                phoneNumber, 60, TimeUnit.SECONDS, SignUp.this, new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                    @Override
+                    public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
+                        //Called if it is not needed to enter verification code
+                        //signInWithCredential(phoneAuthCredential);
+                        Toast.makeText(SignUp.this, phoneAuthCredential.toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onVerificationFailed(FirebaseException e) {
+                        //incorrect phone number, verification code, emulator, etc.
+                        Toast.makeText(SignUp.this, "VerificationFailed ", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onCodeSent(String verificationId, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                        //now the code has been sent, save the verificationId we may need it
+                        super.onCodeSent(verificationId, forceResendingToken);
+
+                        mVerificationId[1] = verificationId;
+                        mVerificationId[2] = txtMobile.getText().toString();
+                        Intent intent = new Intent(SignUp.this, verify.class);
+                        intent.putExtra("stuff",mVerificationId[1]);
+                        intent.putExtra("phn",mVerificationId[2]);
+                        intent.putExtra("name",txtName.getText().toString());
+                        intent.putExtra("email",txtemail.getText().toString());
+                        intent.putExtra("addr",txtaddress.getText().toString());
+                        intent.putExtra("pass",txtPass.getText().toString());
+                        startActivity(intent);
+                        finish();
+
+
+                    }
+
+                    @Override
+                    public void onCodeAutoRetrievalTimeOut(String verificationId) {
+                        //called after timeout if onVerificationCompleted has not been called
+                        super.onCodeAutoRetrievalTimeOut(verificationId);
+
+                    }
+                }
+        );
+
+
+
+
+
+
+
     }
 
 }

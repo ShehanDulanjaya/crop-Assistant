@@ -39,7 +39,7 @@
                 android:layout_alignStart="@+id/lblinfo"
                 android:layout_marginTop="10dp"
                 android:hint="Please enter your bid price here"
-                android:inputType="number"
+                android:inputType="text"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="20dp"

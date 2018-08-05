@@ -15,6 +15,9 @@ import android.widget.Toast;
 
 import com.core.sheha.ftest.Firebase.Profile;
 import com.firebase.client.Firebase;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.OutputStream;
+import java.util.concurrent.TimeUnit;
 
 public class loginPage extends AppCompatActivity {
     ActionBar actionBar;
@@ -29,7 +33,6 @@ public class loginPage extends AppCompatActivity {
     TextView tvCrateAccount,tvforgotpass;
     Button btnlogin;
     EditText txtno,txtpass;
-
     DatabaseReference dbRef;
 
     @Override
@@ -95,7 +98,7 @@ public class loginPage extends AppCompatActivity {
 
     private void getUserData(){
 
-        dbRef = FirebaseDatabase.getInstance().getReference("accounts/"+txtno.getText().toString());
+        dbRef = FirebaseDatabase.getInstance().getReference("accounts/"+txtno.getText().toString().trim());
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -116,7 +119,7 @@ public class loginPage extends AppCompatActivity {
                         txtpass.setError(null);
                         //setDataBustoDB();
                     }
-                    if(profile.getMobile().equals(txtno.getText().toString()) && profile.getPass().equals(txtpass.getText().toString())){
+                    if(profile.getMobile().equals(txtno.getText().toString().trim()) && profile.getPass().equals(txtpass.getText().toString().trim())){
                         saveAssest("account.txt","login");
                         saveAssest("name.txt",profile.getName());
                         saveAssest("mobile.txt",profile.getMobile());
@@ -134,7 +137,7 @@ public class loginPage extends AppCompatActivity {
                     }
                 }
                 catch (Exception ex){
-                    Toast.makeText(ct, "This number is not register please Sign-in", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ct, ex.toString(), Toast.LENGTH_LONG).show();
 
 
                 }
@@ -174,4 +177,7 @@ public class loginPage extends AppCompatActivity {
             decorView.setSystemUiVisibility(uiOptions);
         }
     }
+
+
+
 }
